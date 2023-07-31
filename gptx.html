@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stop Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Stop Game</h1>
+    <div class="container">
+        <div class="category">
+            <h2>Nome</h2>
+            <input type="text" id="nome" readonly>
+        </div>
+        <div class="category">
+            <h2>Animal</h2>
+            <input type="text" id="animal" readonly>
+        </div>
+        <div class="category">
+            <h2>Cor</h2>
+            <input type="text" id="cor" readonly>
+        </div>
+        <div class="category">
+            <h2>País</h2>
+            <input type="text" id="pais" readonly>
+        </div>
+        <div class="category">
+            <h2>Fruta</h2>
+            <input type="text" id="fruta" readonly>
+        </div>
+        <button onclick="iniciarJogo()">Iniciar Jogo</button>
+        <button onclick="encerrarJogo()">Encerrar Jogo</button>
+    </div>
+
+    <script>
+        let isJogoAtivo = false;
+        let letraAtual = "";
+
+        function iniciarJogo() {
+            if (!isJogoAtivo) {
+                isJogoAtivo = true;
+                gerarLetra();
+                document.getElementById('nome').readOnly = false;
+                document.getElementById('animal').readOnly = false;
+                document.getElementById('cor').readOnly = false;
+                document.getElementById('pais').readOnly = false;
+                document.getElementById('fruta').readOnly = false;
+            }
+        }
+
+        function encerrarJogo() {
+            if (isJogoAtivo) {
+                isJogoAtivo = false;
+                document.getElementById('nome').readOnly = true;
+                document.getElementById('animal').readOnly = true;
+                document.getElementById('cor').readOnly = true;
+                document.getElementById('pais').readOnly = true;
+                document.getElementById('fruta').readOnly = true;
+                calcularPontuacao();
+            }
+        }
+
+        function gerarLetra() {
+            const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            letraAtual = letras[Math.floor(Math.random() * letras.length)];
+            document.getElementById('nome').value = "";
+            document.getElementById('animal').value = "";
+            document.getElementById('cor').value = "";
+            document.getElementById('pais').value = "";
+            document.getElementById('fruta').value = "";
+        }
+
+        function calcularPontuacao() {
+            const respostas = {
+                nome: document.getElementById('nome').value.trim().toUpperCase(),
+                animal: document.getElementById('animal').value.trim().toUpperCase(),
+                cor: document.getElementById('cor').value.trim().toUpperCase(),
+                pais: document.getElementById('pais').value.trim().toUpperCase(),
+                fruta: document.getElementById('fruta').value.trim().toUpperCase()
+            };
+
+            const pontuacoes = {
+                nome: calcularPontuacaoCategoria(respostas.nome),
+                animal: calcularPontuacaoCategoria(respostas.animal),
+                cor: calcularPontuacaoCategoria(respostas.cor),
+                pais: calcularPontuacaoCategoria(respostas.pais),
+                fruta: calcularPontuacaoCategoria(respostas.fruta)
+            };
+
+            alert(`Pontuação Nome: ${pontuacoes.nome}\nPontuação Animal: ${pontuacoes.animal}\nPontuação Cor: ${pontuacoes.cor}\nPontuação País: ${pontuacoes.pais}\nPontuação Fruta: ${pontuacoes.fruta}`);
+        }
+
+        function calcularPontuacaoCategoria(resposta) {
+            return resposta.startsWith(letraAtual) ? 10 : 0;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
